@@ -14,7 +14,7 @@ public class BookMapper {
                 .photoUrl(bookDto.getPhotoUrl())
                 .createdOn(bookDto.getCreatedOn())
                 .updatedOn(bookDto.getUpdatedOn())
-                .bookShop(bookDto.getBookShop())
+                .category(bookDto.getCategory())
                 .build();
     }
     public static BookDto mapToBookDto(Book book)
@@ -27,7 +27,7 @@ public class BookMapper {
                 .photoUrl(book.getPhotoUrl())
                 .createdOn(book.getCreatedOn())
                 .updatedOn(book.getUpdatedOn())
-                .bookShop(book.getBookShop())
+                .category(book.getCategory())
                 .build();
     }
 }

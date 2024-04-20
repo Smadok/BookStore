@@ -2,10 +2,9 @@ package com.shop.web.services;
 
 import com.shop.web.dto.BookDto;
 import com.shop.web.models.Book;
-import com.shop.web.models.BookShop;
+import com.shop.web.models.Category;
 import com.shop.web.repository.BookRepository;
-import com.shop.web.repository.BookShopRepository;
-import com.shop.web.services.BookService;
+import com.shop.web.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +18,18 @@ import static com.shop.web.mapper.BookMapper.mapToBookDto;
 public class BookServiceImpl implements BookService
 {
     private BookRepository bookRepository;
-    private BookShopRepository bookShopRepository;
+    private CategoryRepository categoryRepository;
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, BookShopRepository bookShopRepository) {
+    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
-        this.bookShopRepository = bookShopRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
-    public void createBook(int bookShopID, BookDto bookDto) {
-        BookShop bookShop = bookShopRepository.findById(bookShopID).get();
+    public void createBook(int categoryID, BookDto bookDto) {
+        Category category = categoryRepository.findById(categoryID).get();
         Book book = mapToBook(bookDto);
-        book.setBookShop(bookShop);
+        book.setCategory(category);
         bookRepository.save(book);
     }
 

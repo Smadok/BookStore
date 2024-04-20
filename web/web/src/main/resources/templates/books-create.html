@@ -10,7 +10,7 @@
 <main class="flex-shrink-0">
     <section layout:fragment="body" class="py-5">
         <div class="container">
-            <form role="form" method="post" th:action="@{/books/{bookShopId}(bookShopId=${bookShopId})}" th:object="${book}">
+            <form role="form" method="post" th:action="@{/books/{categoryId}(categoryId=${categoryId})}" th:object="${book}">
                 <input type="hidden" th:field="*{id}">
                 <div class="container">
                     <div class="form-row">

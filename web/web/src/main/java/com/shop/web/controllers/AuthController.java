@@ -1,6 +1,7 @@
 package com.shop.web.controllers;
 
 import com.shop.web.dto.RegistrationDto;
+import com.shop.web.models.Cart;
 import com.shop.web.models.UserEntity;
 import com.shop.web.services.UserService;
 import jakarta.validation.Valid;
@@ -53,7 +54,7 @@ public class AuthController {
             return "register";
         }
         userService.saveUser(user);
-        return "redirect:/bookShop?success";
+        return "redirect:/category?success";
     }
 
 }

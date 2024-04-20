@@ -25,4 +25,8 @@ public class UserEntity {
             inverseJoinColumns={@JoinColumn(name = "role_id",referencedColumnName = "id")}
     )
     private List<Role> roles = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
+
+
 }

@@ -1,6 +1,6 @@
 package com.shop.web.dto;
 
-import com.shop.web.models.BookShop;
+import com.shop.web.models.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +19,5 @@ public class BookDto {
     private String photoUrl;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
-    private BookShop bookShop;
+    private Category category;
 }

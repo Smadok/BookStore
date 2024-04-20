@@ -25,22 +25,21 @@ public class BookController
     {
         this.bookService = bookService;
     }
-    @GetMapping("/books/{bookShopId}/new")
-    public String createBookForm(@PathVariable("bookShopId") int bookShopId, Model model)
+    @GetMapping("/books/{categoryId}/new")
+    public String createBookForm(@PathVariable("categoryId") int categoryId, Model model)
     {
         Book book = new Book();
-
-        model.addAttribute("bookShopId",bookShopId);
+        model.addAttribute("categoryId", categoryId);
         model.addAttribute("book",book);
         return "books-create";
     }
-    @PostMapping("/books/{bookShopId}")
-    public String createBook(@PathVariable("bookShopId") int bookShopId,
+    @PostMapping("/books/{categoryId}")
+    public String createBook(@PathVariable("categoryId") int categoryId,
                              @ModelAttribute("book") BookDto bookDto,
                              Model model)
     {
-        bookService.createBook(bookShopId,bookDto);
-        return "redirect:/bookShop/" + bookShopId;
+        bookService.createBook(categoryId,bookDto);
+        return "redirect:/category/" + categoryId;
     }
     @GetMapping("/books")
     public String bookList(Model model)
@@ -75,7 +74,7 @@ public class BookController
         }
         BookDto bookDto=bookService.findByBookId(bookId);
         book.setId(bookId);
-        book.setBookShop(bookDto.getBookShop());
+        book.setCategory(bookDto.getCategory());
         bookService.updateBook(book);
         return "redirect:/books";
     }

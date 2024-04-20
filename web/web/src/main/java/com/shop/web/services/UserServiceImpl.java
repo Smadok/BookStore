@@ -1,8 +1,10 @@
 package com.shop.web.services;
 
 import com.shop.web.dto.RegistrationDto;
+import com.shop.web.models.Cart;
 import com.shop.web.models.Role;
 import com.shop.web.models.UserEntity;
+import com.shop.web.repository.CartRepository;
 import com.shop.web.repository.RoleRepository;
 import com.shop.web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class UserServiceImpl implements UserService{
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         Role role=roleRepository.findByName("USER");
         user.setRoles(Arrays.asList(role));
+        Cart cart = new Cart();
+        cart.setUser(user);
+        user.setCart(cart);
         userRepository.save(user);
     }
 
@@ -44,5 +49,6 @@ public class UserServiceImpl implements UserService{
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 
 }

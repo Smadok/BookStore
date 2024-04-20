@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -31,7 +30,7 @@ public class Book
     private LocalDateTime updatedOn;
 
     @ManyToOne
-    @JoinColumn(name = "bookshop_id")
-    private BookShop bookShop;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }
