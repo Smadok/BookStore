@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Modern Business - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <h1>Cart</h1>
+        <div th:if="${cart}">
+        <p>Cart ID: <span th:text="${cart.id}"></span></p>
+        <p>User ID: <span th:text="${cart.user.id}"></span></p>
+        <h2>Books in Cart:</h2>
+        <ul>
+        <li th:each="book : ${cart.books}">
+            <span th:text="${book.title}"></span> by <span th:text="${book.author}"></span> - <span th:text="${book.price}"></span>
+        </li>
+        </ul>
+        </div>
+        <div th:unless="${cart}">
+            <p>No cart found for the current user.</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>
