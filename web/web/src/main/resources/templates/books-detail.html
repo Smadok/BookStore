@@ -29,6 +29,9 @@
             <h2 class="card-title">About this book</h2>
             <p class="card-text" th:text="${book.author}"></p>
             <a class="btn btn-primary" th:href="@{/books/{bookId}/delete(bookId=${book.id})}">Delete</a>
+            <form th:action="@{/books/{bookId}/addToCart(bookId=${bookId})}" th:object="${book}" method="post">
+              <button type="submit" class="btn btn-primary">addToCart</button>
+            </form>
           </div>
         </div>
       </div>

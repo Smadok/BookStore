@@ -3,6 +3,7 @@ package com.shop.web.services;
 import com.shop.web.dto.BookDto;
 import com.shop.web.models.Book;
 import com.shop.web.models.Category;
+import com.shop.web.models.UserEntity;
 import com.shop.web.repository.BookRepository;
 import com.shop.web.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

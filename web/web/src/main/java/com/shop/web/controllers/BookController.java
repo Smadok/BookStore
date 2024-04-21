@@ -2,9 +2,14 @@ package com.shop.web.controllers;
 
 import com.shop.web.dto.BookDto;
 import com.shop.web.models.Book;
+import com.shop.web.models.UserEntity;
 import com.shop.web.services.BookService;
+import com.shop.web.services.CartService;
+import com.shop.web.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +24,14 @@ import java.util.List;
 public class BookController
 {
     private BookService bookService;
+    private UserService userService;
+    private CartService cartService;
     @Autowired
 
-    public BookController(BookService bookService)
-    {
+    public BookController(BookService bookService,UserService userService,CartService cartService) {
         this.bookService = bookService;
+        this.userService=userService;
+        this.cartService=cartService;
     }
     @GetMapping("/books/{categoryId}/new")
     public String createBookForm(@PathVariable("categoryId") int categoryId, Model model)
@@ -83,5 +91,15 @@ public class BookController
     {
         bookService.delete(bookId);
         return "redirect:/books";
+    }
+
+    @PostMapping("/books/{bookId}/addToCart")
+    public String addToCart(@PathVariable("bookId") int bookId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        UserEntity currentUser = userService.findByUsername(username);
+        BookDto book = bookService.findByBookId(bookId);
+        cartService.addBookToCart(currentUser.getCart().getId(), book.getId());
+        return "redirect:/books" ;
     }
 }

@@ -58,7 +58,4 @@ public class CategoryImpl implements CategoryService
         return categories.stream().map(category -> mapToCategoryDto(category)).collect(Collectors.toList());
 
     }
-
-
-
 }

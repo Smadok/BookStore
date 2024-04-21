@@ -1,5 +1,7 @@
 package com.shop.web.services;
 
+import com.shop.web.dto.BookDto;
+import com.shop.web.models.Book;
 import com.shop.web.models.Cart;
 import com.shop.web.repository.BookRepository;
 import com.shop.web.repository.CartRepository;
@@ -29,7 +31,13 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void addBookToCart(int cartId, int bookId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElse(new Cart());
+        Book book = bookRepository.findById(bookId)
+                .orElse(new Book());
 
+        cart.getBooks().add(book);
+        cartRepository.save(cart);
     }
     @Override
     public Cart getCartByUserName(String currentUserName)
