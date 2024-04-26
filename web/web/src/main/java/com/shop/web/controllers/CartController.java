@@ -1,5 +1,6 @@
 package com.shop.web.controllers;
 
+import com.shop.web.dto.CartDto;
 import com.shop.web.models.Cart;
 import com.shop.web.services.CartService;
 import jakarta.servlet.http.HttpSession;
@@ -25,26 +26,25 @@ public class CartController {
     }
     @GetMapping("/cart")
     public String viewCart(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        Cart cart = cartService.getCartByUserName(currentUserName);
+        String currentUserName = getCurrentUserName();
+
+        CartDto cart = cartService.getCartByUserName(currentUserName);
         model.addAttribute("cart", cart);
         return "cart";
     }
     @PostMapping("/cart/removeBook")
     public String removeBookFromCart(@RequestParam("bookId") int bookId, HttpSession session) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
+        String currentUserName = getCurrentUserName();
 
-        Cart cart = cartService.getCartByUserName(currentUserName);
+        CartDto cart = cartService.getCartByUserName(currentUserName);
         if (cart != null) {
             cartService.removeBookFromCart(cart.getId(), bookId);
         }
 
         return "redirect:/cart";
     }
-
-
-
-
+    private String getCurrentUserName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
 }

@@ -1,6 +1,7 @@
 package com.shop.web.controllers;
 
 import com.shop.web.dto.BookDto;
+import com.shop.web.dto.UserDto;
 import com.shop.web.models.Book;
 import com.shop.web.models.UserEntity;
 import com.shop.web.services.BookService;
@@ -8,6 +9,7 @@ import com.shop.web.services.CartService;
 import com.shop.web.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -86,6 +88,7 @@ public class BookController
         bookService.updateBook(book);
         return "redirect:/books";
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/books/{bookId}/delete")
     public String bookDelete(@PathVariable("bookId") int bookId)
     {
@@ -95,11 +98,15 @@ public class BookController
 
     @PostMapping("/books/{bookId}/addToCart")
     public String addToCart(@PathVariable("bookId") int bookId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        UserEntity currentUser = userService.findByUsername(username);
+        String currentUserName = getCurrentUserName();
+
+        UserEntity currentUser = userService.findByUsername(currentUserName);
         BookDto book = bookService.findByBookId(bookId);
         cartService.addBookToCart(currentUser.getCart().getId(), book.getId());
         return "redirect:/books" ;
+    }
+    private String getCurrentUserName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 }

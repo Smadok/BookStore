@@ -22,7 +22,7 @@
         <h1>Cart</h1>
         <div th:if="${cart}">
             <p>Cart ID: <span th:text="${cart.id}"></span></p>
-            <p>User ID: <span th:text="${cart.user.id}"></span></p>
+            <p>User ID: <span th:text="${cart.userDto.id}"></span></p>
             <h2>Books in Cart:</h2>
             <ul>
                 <li th:each="book : ${cart.books}">

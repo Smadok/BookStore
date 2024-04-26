@@ -1,6 +1,7 @@
 package com.shop.web.services;
 
 import com.shop.web.dto.BookDto;
+import com.shop.web.dto.CartDto;
 import com.shop.web.models.Book;
 import com.shop.web.models.Cart;
 import com.shop.web.models.Category;
@@ -12,6 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.shop.web.mapper.BookMapper.mapToBook;
+import static com.shop.web.mapper.BookMapper.mapToBookDto;
+import static com.shop.web.mapper.CartMapper.mapToCart;
+import static com.shop.web.mapper.CartMapper.mapToCartDto;
+import static com.shop.web.mapper.CategoryMapper.mapToCategoryDto;
 
 
 @Service
@@ -34,25 +39,29 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void addBookToCart(int cartId, int bookId) {
-        Cart cart = cartRepository.findById(cartId).get();
-        Book book = bookRepository.findById(bookId).get();
+        CartDto cartDto = mapToCartDto(cartRepository.findById(cartId).get());
+        BookDto bookDto = mapToBookDto(bookRepository.findById(bookId).get());
 
-        cart.getBooks().add(book);
+        cartDto.getBooks().add(bookDto);
+
+        Cart cart = mapToCart(cartDto);
         cartRepository.save(cart);
 
     }
     @Override
-    public Cart getCartByUserName(String currentUserName)
+    public CartDto getCartByUserName(String currentUserName)
     {
-        return cartRepository.findByUserUsername(currentUserName);
+        Cart cart=cartRepository.findByUserUsername(currentUserName);
+        return mapToCartDto(cart);
     }
 
     @Override
     public void removeBookFromCart(int cartId, int bookId) {
-        Cart cart = cartRepository.findById(cartId).get();
-        Book bookToRemove = bookRepository.findById(bookId).get();
+        CartDto cartDto = mapToCartDto(cartRepository.findById(cartId).get());
+        BookDto bookToRemoveDto = mapToBookDto(bookRepository.findById(bookId).get());
 
-        cart.getBooks().remove(bookToRemove);
+        cartDto.getBooks().remove(bookToRemoveDto);
+        Cart cart = mapToCart(cartDto);
         cartRepository.save(cart);
     }
 
