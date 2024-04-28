@@ -9,7 +9,6 @@ public class UserMapper {
                 .id(userEntity.getId())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
-
                 .build();
     }
     public static UserEntity mapToUser(UserDto userDto) {

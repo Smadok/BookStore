@@ -1,10 +1,7 @@
 package com.shop.web.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,15 +10,15 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "orders")
-public class Order
-{
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "cart_id")
+    @ManyToOne
+    @JoinColumn(name = "cart_id", unique = false)
     private Cart cart;
 
     @Column(name = "order_date")
@@ -29,4 +26,9 @@ public class Order
 
     @Column(name = "total_price")
     private double totalPrice;
+
+    @Column(name = "address")
+    private String address;
+
+
 }

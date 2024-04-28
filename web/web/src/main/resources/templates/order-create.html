@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Order</title>
+</head>
+<body>
+<h1>Create Order</h1>
+
+<form action="/orders/placeOrder" method="post" th:object="${orderDto}">
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" th:field="*{address}" required>
+    <br><br>
+    <button type="submit">Place Order</button>
+</form>
+
+</body>
+</html>

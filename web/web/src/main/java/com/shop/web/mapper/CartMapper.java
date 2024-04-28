@@ -14,20 +14,30 @@ import static com.shop.web.mapper.UserMapper.mapToUser;
 
 public class CartMapper {
     public static CartDto mapToCartDto(Cart cart) {
+        if (cart == null) {
+            return null;
+        }
+
         UserDto userDto = mapToUserDto(cart.getUser());
 
         return CartDto.builder()
                 .id(cart.getId())
                 .userDto(userDto)
-                .books(cart.getBooks().stream().map((book) -> mapToBookDto(book)).collect(Collectors.toList()))
+                .books(cart.getBooks().stream().map(book -> mapToBookDto(book)).collect(Collectors.toList()))
                 .build();
     }
+
     public static Cart mapToCart(CartDto cartDto) {
+        if (cartDto == null) {
+            return null;
+        }
+
         UserEntity userEntity = mapToUser(cartDto.getUserDto());
+
         return Cart.builder()
                 .id(cartDto.getId())
                 .user(userEntity)
-                .books(cartDto.getBooks().stream().map((bookDto) -> mapToBook(bookDto)).collect(Collectors.toList()))
+                .books(cartDto.getBooks().stream().map(bookDto -> mapToBook(bookDto)).collect(Collectors.toList()))
                 .build();
     }
 

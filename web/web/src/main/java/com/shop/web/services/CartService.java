@@ -12,4 +12,8 @@ public interface CartService {
     CartDto getCartByUserName(String currentUserName);
 
     void removeBookFromCart(int cartId, int bookId);
+
+    Cart getCartById(int cartId);
+    double calculateTotalPrice(CartDto cartDto);
+
 }

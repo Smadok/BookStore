@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'Order Details - ' + order.id}">Order Details</title>
+</head>
+<body>
+<h2>Order Details</h2>
+<p>Order ID: <span th:text="${order.id}"></span></p>
+<p>Order Date: <span th:text="${order.orderDate}"></span></p>
+<p>Total Price: <span th:text="${order.totalPrice}"></span></p>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.shop.web.controllers;
 
+import com.shop.web.dto.BookDto;
 import com.shop.web.dto.CartDto;
 import com.shop.web.models.Cart;
 import com.shop.web.services.CartService;
@@ -29,6 +30,8 @@ public class CartController {
         String currentUserName = getCurrentUserName();
 
         CartDto cart = cartService.getCartByUserName(currentUserName);
+        double calculatedTotalPrice = cartService.calculateTotalPrice(cart);
+        model.addAttribute("calculatedTotalPrice", calculatedTotalPrice);
         model.addAttribute("cart", cart);
         return "cart";
     }
@@ -43,8 +46,21 @@ public class CartController {
 
         return "redirect:/cart";
     }
+    @GetMapping("/cart/checkout")
+    public String checkout(Model model, HttpSession session) {
+
+        String currentUserName = getCurrentUserName();
+        CartDto currentCart = cartService.getCartByUserName(currentUserName);
+        double calculatedTotalPrice = cartService.calculateTotalPrice(currentCart);
+
+        session.setAttribute("calculatedTotalPrice", calculatedTotalPrice);
+
+        return "redirect:/orders/new";
+    }
     private String getCurrentUserName() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
     }
+
+
 }

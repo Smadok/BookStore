@@ -37,7 +37,12 @@
         <div th:unless="${cart}">
             <p>No cart found for the current user.</p>
         </div>
+        <p th:if="${calculatedTotalPrice != null}" th:text="'Total Price: $' + ${calculatedTotalPrice}"></p>
+        <form action="/cart/checkout" method="get">
+            <button type="submit">Checkout</button>
+        </form>
     </section>
+
 </main>
 </body>
 </html>

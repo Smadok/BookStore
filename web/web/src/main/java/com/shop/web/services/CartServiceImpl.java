@@ -8,6 +8,8 @@ import com.shop.web.models.Category;
 import com.shop.web.repository.BookRepository;
 import com.shop.web.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -64,5 +66,26 @@ public class CartServiceImpl implements CartService{
         Cart cart = mapToCart(cartDto);
         cartRepository.save(cart);
     }
+
+    @Override
+    public Cart getCartById(int cartId) {
+        return cartRepository.findById(cartId).get();
+    }
+
+    @Override
+    public double calculateTotalPrice(CartDto cartDto) {
+        if (cartDto == null || cartDto.getBooks() == null || cartDto.getBooks().isEmpty()) {
+            return 0.0; // Return 0 if cart is empty or null
+        }
+
+        // Iterate over the list of books in the cart and calculate total price
+        double totalPrice = 0.0;
+        for (BookDto book : cartDto.getBooks()) {
+            totalPrice += book.getPrice(); // Assuming each book has a 'getPrice' method
+        }
+
+        return totalPrice;
+    }
+
 
 }
