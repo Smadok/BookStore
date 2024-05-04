@@ -28,8 +28,9 @@
             <div class="small text-muted">January 1, 2023</div>
             <h2 class="card-title">About this book</h2>
             <p class="card-text" th:text="${book.author}"></p>
-            <a class="btn btn-primary" th:href="@{/books/{bookId}/delete(bookId=${book.id})}">Delete</a>
-            <form th:action="@{/books/{bookId}/addToCart(bookId=${bookId})}" th:object="${book}" method="post">
+            <div th:if="${isAdmin}">
+              <a class="btn btn-danger" th:href="@{/books/{bookId}/delete(bookId=${book.id})}">Delete</a>
+            </div><form th:action="@{/books/{bookId}/addToCart(bookId=${bookId})}" th:object="${book}" method="post">
               <button type="submit" class="btn btn-primary">addToCart</button>
             </form>
           </div>

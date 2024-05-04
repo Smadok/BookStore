@@ -58,18 +58,24 @@ public class BookController
         model.addAttribute("books",books);
         return "books-list";
     }
+    @PreAuthorize("@securityConfig.admin or @securityConfig.user")
     @GetMapping("/books/{bookId}")
     public String viewBook(@PathVariable("bookId") int bookId, Model model)
     {
         BookDto bookDto = bookService.findByBookId(bookId);
         model.addAttribute("book",bookDto);
+        model.addAttribute("isAdmin",isAdminUser());
         return "books-detail";
     }
+
     @GetMapping("/books/{bookId}/edit")
     public String editBook(@PathVariable("bookId") int bookId, Model model)
     {
         BookDto book =bookService.findByBookId(bookId);
         model.addAttribute("book",book);
+
+        boolean isAdmin = isAdminUser();
+        model.addAttribute("isAdmin", isAdmin);
         return "books-edit";
     }
     @PostMapping("books/{bookId}/edit")
@@ -88,10 +94,9 @@ public class BookController
         bookService.updateBook(book);
         return "redirect:/books";
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("@securityConfig.admin")
     @GetMapping("/books/{bookId}/delete")
-    public String bookDelete(@PathVariable("bookId") int bookId)
-    {
+    public String bookDelete(@PathVariable("bookId") int bookId) {
         bookService.delete(bookId);
         return "redirect:/books";
     }
@@ -108,5 +113,10 @@ public class BookController
     private String getCurrentUserName() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
+    }
+    private boolean isAdminUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
     }
 }
