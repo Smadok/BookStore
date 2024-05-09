@@ -19,6 +19,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String photoUrl;
     private String name;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();

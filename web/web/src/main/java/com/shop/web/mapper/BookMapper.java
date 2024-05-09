@@ -15,6 +15,7 @@ public class BookMapper {
                 .createdOn(bookDto.getCreatedOn())
                 .updatedOn(bookDto.getUpdatedOn())
                 .category(bookDto.getCategory())
+                .quantityAvailable(bookDto.getQuantityAvailable())
                 .build();
     }
     public static BookDto mapToBookDto(Book book)
@@ -28,6 +29,7 @@ public class BookMapper {
                 .createdOn(book.getCreatedOn())
                 .updatedOn(book.getUpdatedOn())
                 .category(book.getCategory())
+                .quantityAvailable(book.getQuantityAvailable())
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import com.shop.web.dto.BookDto;
 import com.shop.web.dto.CartDto;
 import com.shop.web.dto.OrderDto;
 import com.shop.web.mapper.OrderMapper;
+import com.shop.web.models.Book;
 import com.shop.web.models.Cart;
 import com.shop.web.models.Order;
 import com.shop.web.repository.OrderRepository;
@@ -19,12 +20,14 @@ import static com.shop.web.mapper.OrderMapper.mapToOrderDto;
 public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
     private  CartService cartService;
+    private  BookService bookService;
 
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, CartService cartService) {
+    public OrderServiceImpl(OrderRepository orderRepository, CartService cartService,BookService bookService) {
         this.orderRepository = orderRepository;
         this.cartService = cartService;
+        this.bookService=bookService;
     }
     @Override
     public List<OrderDto> getAllOrders() {
@@ -49,9 +52,13 @@ public class OrderServiceImpl implements OrderService{
         if (cart == null) {
             throw new IllegalArgumentException("Invalid cartId: " + orderDto.getCartId());
         }
-
         order.setCart(cart);
         Order savedOrder = orderRepository.save(order);
+
+        for (Book book : cart.getBooks()) {
+            bookService.decreaseBookQuantity(book.getId(), 1);
+        }
+
         return OrderMapper.mapToOrderDto(savedOrder);
     }
 
@@ -61,7 +68,6 @@ public class OrderServiceImpl implements OrderService{
         if (currentCart == null || currentCart.getBooks() == null || currentCart.getBooks().isEmpty()) {
             throw new IllegalStateException("Cart is empty or invalid for the current user");
         }
-
 
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderDate(LocalDateTime.now());

@@ -57,6 +57,19 @@ public class BookServiceImpl implements BookService
     public void delete(int bookId) {
         bookRepository.deleteById(bookId);
     }
+    @Override
+    public void decreaseBookQuantity(int bookId, int quantity) {
+        Book book = bookRepository.findById(bookId).get();
+
+        int currentQuantity = book.getQuantityAvailable();
+        if (currentQuantity < quantity) {
+            throw new IllegalArgumentException("Not enough quantity available for book: " + book.getTitle());
+        }
+
+        int newQuantity = currentQuantity - quantity;
+        book.setQuantityAvailable(newQuantity);
+        bookRepository.save(book);
+    }
 
 
 }

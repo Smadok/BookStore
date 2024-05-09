@@ -20,4 +20,5 @@ public class BookDto {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
     private Category category;
+    private int quantityAvailable;
 }

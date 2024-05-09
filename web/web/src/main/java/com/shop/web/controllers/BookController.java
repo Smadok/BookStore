@@ -52,10 +52,12 @@ public class BookController
         return "redirect:/category/" + categoryId;
     }
     @GetMapping("/books")
+    @PreAuthorize("@securityConfig.admin or @securityConfig.user")
     public String bookList(Model model)
     {
         List<BookDto> books = bookService.findAllBooks();
         model.addAttribute("books",books);
+        model.addAttribute("isAdmin",isAdminUser());
         return "books-list";
     }
     @PreAuthorize("@securityConfig.admin or @securityConfig.user")
@@ -73,11 +75,9 @@ public class BookController
     {
         BookDto book =bookService.findByBookId(bookId);
         model.addAttribute("book",book);
-
-        boolean isAdmin = isAdminUser();
-        model.addAttribute("isAdmin", isAdmin);
         return "books-edit";
     }
+    @PreAuthorize("@securityConfig.admin")
     @PostMapping("books/{bookId}/edit")
     public  String updateBook(@PathVariable("bookId") int bookId
             , @Valid @ModelAttribute("book")BookDto book,

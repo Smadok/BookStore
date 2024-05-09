@@ -14,6 +14,7 @@ public class CategoryMapper {
         Category categoryDto = Category.builder()
                 .id(category.getId())
                 .name(category.getName())
+                .photoUrl(category.getPhotoUrl())
                 .build();
         return categoryDto;
     }
@@ -22,6 +23,7 @@ public class CategoryMapper {
         CategoryDto categoryDto = CategoryDto.builder()
                 .id(category.getId())
                 .name(category.getName())
+                .photoUrl(category.getPhotoUrl())
                 .books(category.getBooks().stream().map((book) -> mapToBookDto(book)).collect(Collectors.toList()))
                 .build();
         return categoryDto;

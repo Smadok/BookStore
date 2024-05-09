@@ -16,6 +16,7 @@ public interface BookService {
     void updateBook(BookDto bookDto);
 
     void delete(int bookId);
+    void decreaseBookQuantity(int bookId, int quantity);
 
 
 }

@@ -23,11 +23,14 @@
       <div class="col-lg-8">
         <!-- Featured blog post-->
         <div class="card mb-4">
-          <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+          <a href="#!"><img class="card-img-top" th:src="${book.photoUrl}" alt="Book Cover"
+                            style="max-width: 200px; max-height: 200px;" /></a>
           <div class="card-body">
             <div class="small text-muted">January 1, 2023</div>
-            <h2 class="card-title">About this book</h2>
-            <p class="card-text" th:text="${book.author}"></p>
+
+            <h3 class="card-title" th:text="${book.title}"></h3>
+            <h5 class="card-text" th:text="${book.author}"></h5>
+            <h5 class="card-text" th:text="${book.price + ' лв'}"></h5>
             <div th:if="${isAdmin}">
               <a class="btn btn-danger" th:href="@{/books/{bookId}/delete(bookId=${book.id})}">Delete</a>
             </div><form th:action="@{/books/{bookId}/addToCart(bookId=${bookId})}" th:object="${book}" method="post">

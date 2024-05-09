@@ -55,8 +55,19 @@
                                     id="photoUrl"
                                     name="photoUrl"
                                     th:field="*{photoUrl}"
-                                    placeholder="PhotoUrl">
-                            <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}" ></p>
+                                    placeholder="Photo Url">
+
+                        </div>
+                        <div class="form-group col-md6">
+                            <label for="quantityAvailable">QuantityAvailable</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="quantityAvailable"
+                                    name="quantityAvailable"
+                                    th:field="*{quantityAvailable}"
+                                    placeholder="quantityAvailable">
+                            <p th:if="${#fields.hasErrors('quantityAvailable')}" class="text-danger" th:errors="*{quantityAvailable}" ></p>
                         </div>
 
                     </div>

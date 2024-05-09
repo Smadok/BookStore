@@ -16,6 +16,7 @@ public class CategoryDto
     private int id;
     @NotEmpty(message = "should not be empty")
     private String name;
+    private String photoUrl;
     private String content;
     private LocalDateTime createdOn;
     private List<BookDto> books;

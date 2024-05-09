@@ -28,21 +28,29 @@
             </div>
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">Category</h1>
-                <p class="lead fw-normal text-muted mb-0">Random</p>
+                <p class="lead fw-normal text-muted mb-0">Пазарувай по категория</p>
             </div>
             <div class="row gx-5">
                 <div>
                     <form th:action="@{/category/search}" class="form-check-inline my-2 my-lg-0 mb-3">
-                        <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search Book Shops" aria-label="Search">
+                        <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search" aria-label="Search">
                     </form>
                 </div>
                 <div th:each="bs:${categories}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-5">
-                        <img class="img-fluid rounded-3 mb-3" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." />
-                        <a th:text="${bs.getName()}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
+                        <img class="img-fluid rounded-3 mb-3" th:src="${bs.photoUrl}" alt="Category Cover"
+                             style="max-width: 200px; max-height: 200px;" />
+                        <div>
+                            <a th:href="@{/category/{categoryId}(categoryId=${bs.id})}"
+                               class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+                               th:text="${bs.getName()}"
+                               href="#!"></a>
+                        </div>
                     </div>
-                    <a class="btn btn-primary" th:href="@{/category/{categoryId}(categoryId=${bs.id})}">View</a>
-                    <a class="btn btn-primary" th:href="@{/category/{categoryId}/edit(categoryId=${bs.id})}">Edit</a>
+                    <a th:href="@{/category/{categoryId}(categoryId=${bs.id})}" class="btn btn-primary">View</a>
+
+                    <a th:if="${isAdmin}" th:href="@{/category/{categoryId}/edit(categoryId=${bs.id})}"
+                       class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>

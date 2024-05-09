@@ -31,11 +31,19 @@
 
                 <div th:each="book:${books}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-5">
-                        <img class="img-fluid rounded-3 mb-3" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." />
-                        <a th:text="${book.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!"></a>
+                        <img class="img-fluid rounded-3 mb-3" th:src="${book.photoUrl}" alt="Book Cover"
+                             style="max-width: 200px; max-height: 200px;" />
+                        <div>
+                            <a th:href="@{/books/{bookId}(bookId=${book.id})}"
+                               class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+                               th:text="${book.title}"
+                               href="#!"></a>
+                        </div>
                     </div>
                     <a th:href="@{/books/{bookId}(bookId=${book.id})}" class="btn btn-primary">View</a>
-                    <a th:href="@{/books/{bookId}/edit(bookId=${book.id})}" class="btn btn-primary" >Edit</a>
+
+                    <a th:if="${isAdmin}" th:href="@{/books/{bookId}/edit(bookId=${book.id})}"
+                       class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>

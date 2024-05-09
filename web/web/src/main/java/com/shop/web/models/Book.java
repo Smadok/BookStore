@@ -28,6 +28,7 @@ public class Book
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+    private int quantityAvailable;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
