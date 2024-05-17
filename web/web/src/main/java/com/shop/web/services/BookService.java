@@ -1,8 +1,6 @@
 package com.shop.web.services;
 
 import com.shop.web.dto.BookDto;
-import com.shop.web.models.Book;
-
 import java.util.List;
 
 
@@ -17,6 +15,7 @@ public interface BookService {
 
     void delete(int bookId);
     void decreaseBookQuantity(int bookId, int quantity);
+    List<BookDto> searchBooks(String query);
 
 
 }

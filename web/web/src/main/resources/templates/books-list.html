@@ -28,7 +28,9 @@
                 <p class="lead fw-normal text-muted mb-0">Random</p>
             </div>
             <div class="row gx-5">
-
+                <form th:action="@{/books/search}" class="form-check-inline my-2 my-lg-0 mb-3">
+                    <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search" aria-label="Search">
+                </form>
                 <div th:each="book:${books}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-5">
                         <img class="img-fluid rounded-3 mb-3" th:src="${book.photoUrl}" alt="Book Cover"

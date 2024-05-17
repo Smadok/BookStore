@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category,Integer>
 {
  Optional<Category>findByName(String url);
- @Query("SELECT bs FROM Category bs WHERE bs.name LIKE concat('%', :query,'%') ")
+ @Query("SELECT c FROM Category c WHERE c.name LIKE concat('%', :query,'%') ")
  List<Category> searchCategories(String query);
 }

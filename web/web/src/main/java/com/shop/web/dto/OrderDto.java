@@ -3,7 +3,6 @@ package com.shop.web.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Builder
 @Data
@@ -17,6 +16,5 @@ public class OrderDto {
     private double totalPrice;
     private int cartId;
     private String address;
-    private Map<Integer, Integer> bookQuantities;
 }
 

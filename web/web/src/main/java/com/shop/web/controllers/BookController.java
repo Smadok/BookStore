@@ -1,6 +1,7 @@
 package com.shop.web.controllers;
 
 import com.shop.web.dto.BookDto;
+import com.shop.web.dto.CategoryDto;
 import com.shop.web.dto.UserDto;
 import com.shop.web.models.Book;
 import com.shop.web.models.UserEntity;
@@ -15,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -109,6 +107,13 @@ public class BookController
         BookDto book = bookService.findByBookId(bookId);
         cartService.addBookToCart(currentUser.getCart().getId(), book.getId());
         return "redirect:/books" ;
+    }
+    @GetMapping("/books/search")
+    public String searchBooks(@RequestParam(value = "query") String query, Model model)
+    {
+        List<BookDto> bookDtos = bookService.searchBooks(query);
+        model.addAttribute("books", bookDtos);
+        return "books-list";
     }
     private String getCurrentUserName() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -1,6 +1,7 @@
 package com.shop.web.services;
 
 import com.shop.web.dto.BookDto;
+import com.shop.web.dto.CategoryDto;
 import com.shop.web.models.Book;
 import com.shop.web.models.Category;
 import com.shop.web.models.UserEntity;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.shop.web.mapper.BookMapper.mapToBook;
 import static com.shop.web.mapper.BookMapper.mapToBookDto;
+import static com.shop.web.mapper.CategoryMapper.mapToCategoryDto;
 
 @Service
 public class BookServiceImpl implements BookService
@@ -70,6 +72,11 @@ public class BookServiceImpl implements BookService
         book.setQuantityAvailable(newQuantity);
         bookRepository.save(book);
     }
+    @Override
+    public List<BookDto> searchBooks(String query) {
+        List<Book> books = bookRepository.searchBooks(query);
+        return books.stream().map(book -> mapToBookDto(book)).collect(Collectors.toList());
 
+    }
 
 }
