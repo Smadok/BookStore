@@ -1,10 +1,8 @@
 package com.shop.web.services;
 
 import com.shop.web.dto.BookDto;
-import com.shop.web.dto.CategoryDto;
 import com.shop.web.models.Book;
 import com.shop.web.models.Category;
-import com.shop.web.models.UserEntity;
 import com.shop.web.repository.BookRepository;
 import com.shop.web.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
 
 import static com.shop.web.mapper.BookMapper.mapToBook;
 import static com.shop.web.mapper.BookMapper.mapToBookDto;
-import static com.shop.web.mapper.CategoryMapper.mapToCategoryDto;
 
 @Service
 public class BookServiceImpl implements BookService
@@ -29,11 +26,12 @@ public class BookServiceImpl implements BookService
     }
 
     @Override
-    public void createBook(int categoryID, BookDto bookDto) {
+    public BookDto createBook(int categoryID, BookDto bookDto) {
         Category category = categoryRepository.findById(categoryID).get();
         Book book = mapToBook(bookDto);
         book.setCategory(category);
         bookRepository.save(book);
+        return bookDto;
     }
 
     @Override

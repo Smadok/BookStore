@@ -67,7 +67,7 @@ public class BookController
         model.addAttribute("isAdmin",isAdminUser());
         return "books-detail";
     }
-
+    @PreAuthorize("@securityConfig.admin")
     @GetMapping("/books/{bookId}/edit")
     public String editBook(@PathVariable("bookId") int bookId, Model model)
     {
@@ -119,9 +119,9 @@ public class BookController
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
     }
-    private boolean isAdminUser() {
+    public boolean isAdminUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
 }

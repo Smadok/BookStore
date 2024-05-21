@@ -56,6 +56,5 @@ public class CategoryImpl implements CategoryService
     public List<CategoryDto> searchCategories(String query) {
         List<Category> categories = categoryRepository.searchCategories(query);
         return categories.stream().map(category -> mapToCategoryDto(category)).collect(Collectors.toList());
-
     }
 }

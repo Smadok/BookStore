@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public interface BookService {
-    void createBook(int categoryID, BookDto bookDto);
+    BookDto createBook(int categoryID, BookDto bookDto);
 
     List<BookDto> findAllBooks();
 
